@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import smasnugLogo from './assets/smasnug.jpg';
 import viteLogo from '/vite.svg';
 import './App.css';
+import Input from './Input';
 
 function Login() {
     // form validation is taken from
@@ -62,15 +63,11 @@ function Login() {
         let iuv = validateUsername();
         let ipv = validatePassword();
         if (iuv && ipv) {
-            let path = 'login';
+            let path = 'dashboard';
             navigate(path);
         } else {
             // console.error('try again');
         }
-    };
-
-    const inputStyle = {
-        fontSize: '32px',
     };
 
     const titleStyle = {
@@ -88,22 +85,16 @@ function Login() {
                 />
                 <div className="fields">
                     <h2>Username</h2>
-                    <input
-                        type="text"
-                        value={username}
-                        style={inputStyle}
-                        onChange={(event) => setUsername(event.target.value)}
-                    />
+                    <Input value={username} setter={setUsername} />
                     <span className="error">{usernameError}</span>
                     <h2>Password</h2>
-
-                    <input
+                    <Input
                         type="password"
                         value={password}
-                        style={inputStyle}
-                        onChange={(event) => setPassword(event.target.value)}
+                        setter={setPassword}
                     />
                     <span className="error">{passwordError}</span>
+                    <div></div>
                     <button
                         type="button"
                         className="loginButton"
