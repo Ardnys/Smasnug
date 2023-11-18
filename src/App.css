@@ -56,6 +56,31 @@ body {
 }
 
 
+.contactPage {
+    display: grid;
+    grid-template-areas:
+        "left right right right";
+    grid-template-rows: 90vh;
+    grid-template-columns: repeat(4, 1fr); /* Divide the grid into 4 columns */
+    border: 1px solid #0B0;
+    position: relative; /* Ensure that child elements are positioned relative to this container */
+}
+
+.leftPanel {
+    grid-area: left;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #fff;
+    align-items: center;
+}
+
+.rightPanel {
+    grid-area: right;
+    display: grid;
+    border: 1px solid #fff;
+}
+
 
 @keyframes logo-spin {
   from {

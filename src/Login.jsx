@@ -107,8 +107,6 @@ function Login() {
                     <button
                         type="button"
                         className="loginButton"
-                        id="submit"
-                        value="Submit"
                         onClick={validate}
                     >
                         Login
