@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import smasnugLogo from './assets/smasnug.jpg';
-import viteLogo from '/vite.svg';
+import loginLogo from './assets/edo.jpg';
 import './App.css';
 import Input from './Input';
 
@@ -72,14 +71,14 @@ function Login() {
 
     const titleStyle = {
         fontSize: '64px',
-        color: '#646cffaa',
+        color: '#ffe400',
     };
     return (
         <>
-            <h1 style={titleStyle}>Smasnug Galoxy Phon Book</h1>
+            <h1 style={titleStyle}>Space Phone Book</h1>
             <div className="login">
                 <img
-                    src={smasnugLogo}
+                    src={loginLogo}
                     className="logo"
                     alt="smasnug. it's misspelled samsung"
                 />
