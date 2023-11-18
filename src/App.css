@@ -36,7 +36,7 @@ body {
 .fields {
     width: 800px;
     display: grid;
-    grid-template-columns: 200px 500px;
+    grid-template-columns: 200px 500px 500px;
     grid-row: auto auto;
     grid-column-gap: 20px;
     grid-row-gap: 20px;
@@ -48,6 +48,11 @@ body {
     width: 200px;
     font-size: 25px;
     margin: 20px;
+}
+
+.error {
+    text-align: left;
+    color: #CD1818;
 }
 
 
