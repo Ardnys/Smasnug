@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import Input from './Input';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -17,6 +18,7 @@ const AddContact = () => {
         const contact = {
             name: name,
             phone: phone,
+            id: uuidv4(),
         };
         const updatedContacts = [...contacts, contact];
 

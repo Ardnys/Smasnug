@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Input from './Input';
+import Card from './Card';
+import { v4 as uuidv4 } from 'uuid';
 
 const Dashboard = () => {
     const [searchContact, setSearchContact] = useState('');
@@ -43,7 +45,15 @@ const Dashboard = () => {
                         </button>
                     </Link>
                 </div>
-                <div className="rightPanel"></div>
+                <div className="rightPanel">
+                    {contacts.map((contact) => (
+                        <Card
+                            key={contact.id}
+                            name={contact.name}
+                            phoneNumber={contact.phone}
+                        />
+                    ))}
+                </div>
                 <Link to="/">Back to login </Link>
             </div>
         </>

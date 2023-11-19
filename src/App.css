@@ -79,11 +79,7 @@ body {
     align-items: center;
 }
 
-.rightPanel {
-    grid-area: right;
-    display: grid;
-    border: 1px solid #fff;
-}
+
 
 .addContactPage {
     display: flex;
@@ -115,6 +111,70 @@ body {
 .addContactButton:hover {
     border-color: #f21922;;
 }
+.rightPanel {
+    grid-area: right;
+    display: grid;
+    border: 1px solid #fff;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 300px;
+    gap: 30px;
+    padding: 30px;
+    overflow-x: auto;
+    padding: 0;
+}
+.card {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: row;
+    border: 1px solid #fff;
+    padding-left: 20px;
+}
+
+.cardData {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    /* border: 1px solid #fff; */
+    flex-grow: 1;
+    height: 100%;
+}
+
+.cardImage {
+    grid-area: img;
+    height: 120px;
+    width: 120px;
+
+
+}
+
+.cardName {
+    grid-area: name;
+    width: fit-content;
+    height: fit-content;
+    margin: 0;
+
+}
+.cardNumber {
+    grid-area: num;
+    width: fit-content;
+    height: fit-content;
+    margin: 0;
+
+
+}
+.cardButtons {
+    display: flex;
+    gap: 10px;
+}
+.cardButton {
+    width: fit-content;
+    height: fit-content;
+
+
+}
 
 
 @keyframes logo-spin {
@@ -130,10 +190,6 @@ body {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
-}
-
-.card {
-  padding: 2em;
 }
 
 .read-the-docs {

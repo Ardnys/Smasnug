@@ -1,11 +1,18 @@
-const Card = ({ name, phoneNumber }) => {
+const Card = ({ name, phoneNumber, id }) => {
     return (
-        <div className="card">
+        <div key={id} className="card">
             <img className="cardImage" />
 
-            <button>Edit</button>
+            <div className="cardData">
+                <h2 className="cardName">{name}</h2>
+                <h2 className="cardNumber">{phoneNumber}</h2>
 
-            <button>Delete</button>
+                <div className="cardButtons">
+                    <button className="cardButton">Edit</button>
+
+                    <button className="cardButton">Delete</button>
+                </div>
+            </div>
         </div>
     );
 };
