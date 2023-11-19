@@ -1,17 +1,27 @@
 import { useState } from 'react';
 import Input from './Input';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import contactLogo from './assets/contact.jpg';
 
 const AddContact = () => {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
 
+    const location = useLocation();
+    const contacts = location.state || [];
+
     let navigate = useNavigate();
 
     const add = () => {
+        // TODO: maybe check that name and phone is valid
+        const contact = {
+            name: name,
+            phone: phone,
+        };
+        const updatedContacts = [...contacts, contact];
+
         let path = '/dashboard';
-        navigate(path);
+        navigate(path, { state: updatedContacts });
     };
     return (
         <>

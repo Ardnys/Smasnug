@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Input from './Input';
 
 const Dashboard = () => {
     const [searchContact, setSearchContact] = useState('');
+
+    const location = useLocation();
+    const contacts = location.state || [];
 
     const buttonStyle = {
         width: 'fit-content',
     };
 
     const find = () => {
-        // Add logic for searching contacts
+        // TODO Add logic for searching contacts
+        console.log(contacts);
     };
-
-    // Removed the direct use of `useNavigate`
 
     return (
         <>
@@ -29,7 +31,7 @@ const Dashboard = () => {
                     >
                         Find
                     </button>
-                    <Link to="/add">
+                    <Link to="/add" state={contacts}>
                         {' '}
                         {/* Use Link for navigation */}
                         <button
