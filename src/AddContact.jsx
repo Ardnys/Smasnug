@@ -27,6 +27,7 @@ const AddContact = () => {
         let path = '/dashboard';
         navigate(path, { state: updatedContacts });
     };
+
     return (
         <>
             <div className="addContactPage">
@@ -35,8 +36,9 @@ const AddContact = () => {
                     className="contactLogo"
                     alt="a placeholder silouhette of a man"
                 />
-
+                <label>Name</label>
                 <Input value={name} setter={setName} />
+                <label>Phone</label>
                 <Input value={phone} setter={setPhone} />
                 <button
                     className="addContactButton"

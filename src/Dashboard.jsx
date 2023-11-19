@@ -50,7 +50,9 @@ const Dashboard = () => {
 
     const find = () => {
         const results = contacts.filter((contact) => {
-            return contact.name.toLowerCase().includes(searchContact);
+            return contact.name
+                .toLowerCase()
+                .includes(searchContact.toLowerCase());
         });
 
         setFilteredContacts(results);

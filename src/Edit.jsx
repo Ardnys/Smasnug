@@ -28,8 +28,9 @@ const Edit = () => {
                     className="defaultLogo"
                     alt="a placeholder silouhette of a man"
                 />
-
+                <label>Name</label>
                 <Input value={name} setter={setName} />
+                <label>Phone</label>
                 <Input value={phone} setter={setPhone} />
                 <button
                     className="addContactButton"
