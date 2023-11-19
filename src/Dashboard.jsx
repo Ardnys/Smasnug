@@ -71,10 +71,11 @@ const Dashboard = () => {
                     <button
                         type="button"
                         className="loginButton"
+                        placeholder="search contacts"
                         style={buttonStyle}
                         onClick={find}
                     >
-                        Find
+                        Search
                     </button>
                     <Link to="/add" state={contacts}>
                         {' '}

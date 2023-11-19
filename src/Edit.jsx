@@ -5,14 +5,14 @@ import contactLogo from './assets/contact.jpg';
 
 const Edit = () => {
     const { id } = useParams();
-    const [name, setName] = useState('');
-    const [phone, setPhone] = useState('');
     const navigate = useNavigate();
 
     const location = useLocation();
     const contacts = location.state || [];
 
     const contact = contacts.find((c) => c.id === id || '');
+    const [name, setName] = useState(contact.name || '');
+    const [phone, setPhone] = useState(contact.phone || '');
 
     const handleSave = () => {
         contact.name = name;
