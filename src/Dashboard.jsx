@@ -39,7 +39,7 @@ const Dashboard = () => {
     const [searchContact, setSearchContact] = useState('');
 
     const location = useLocation();
-    const contacts = location.state || bebop;
+    const [contacts, setContacts] = useState(location.state || bebop);
 
     const buttonStyle = {
         width: 'fit-content',
@@ -48,6 +48,12 @@ const Dashboard = () => {
     const find = () => {
         // TODO Add logic for searching contacts
         console.log(contacts);
+    };
+
+    const removeContact = (id) => {
+        setContacts((prevContacts) =>
+            prevContacts.filter((contact) => contact.id !== id)
+        );
     };
 
     return (
@@ -80,9 +86,11 @@ const Dashboard = () => {
                     {contacts.map((contact) => (
                         <Card
                             key={contact.id}
+                            id={contact.id}
                             name={contact.name}
                             phoneNumber={contact.phone}
                             imgSrc={contact.imgSrc}
+                            yeet={removeContact}
                         />
                     ))}
                 </div>
