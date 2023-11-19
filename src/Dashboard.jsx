@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Input from './Input';
 import Card from './Card';
 import { v4 as uuidv4 } from 'uuid';
@@ -40,6 +40,8 @@ const Dashboard = () => {
 
     const location = useLocation();
     const [contacts, setContacts] = useState(location.state || bebop);
+
+    const navigate = useNavigate();
 
     const buttonStyle = {
         width: 'fit-content',
@@ -91,6 +93,11 @@ const Dashboard = () => {
                             phoneNumber={contact.phone}
                             imgSrc={contact.imgSrc}
                             yeet={removeContact}
+                            edit={() =>
+                                navigate(`/edit/${contact.id}`, {
+                                    state: contacts,
+                                })
+                            }
                         />
                     ))}
                 </div>

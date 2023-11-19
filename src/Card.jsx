@@ -1,6 +1,6 @@
 import defaultLogo from './assets/default.jpg';
 
-const Card = ({ name, phoneNumber, id, imgSrc = defaultLogo, yeet }) => {
+const Card = ({ name, phoneNumber, id, imgSrc = defaultLogo, yeet, edit }) => {
     return (
         <div key={id} className="card">
             <img className="cardImage" src={imgSrc} />
@@ -10,7 +10,9 @@ const Card = ({ name, phoneNumber, id, imgSrc = defaultLogo, yeet }) => {
                 <h2 className="cardNumber">{phoneNumber}</h2>
 
                 <div className="cardButtons">
-                    <button className="cardButton">Edit</button>
+                    <button className="cardButton" onClick={edit}>
+                        Edit
+                    </button>
 
                     <button className="cardButton" onClick={() => yeet(id)}>
                         Delete

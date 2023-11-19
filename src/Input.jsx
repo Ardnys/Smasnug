@@ -1,4 +1,4 @@
-const Input = ({ type = 'text', value, setter }) => {
+const Input = ({ type = 'text', value, setter, placeholder = '' }) => {
     const inputStyle = {
         fontSize: '32px',
         padding: '0px 15px',
@@ -8,6 +8,7 @@ const Input = ({ type = 'text', value, setter }) => {
             style={inputStyle}
             type={type}
             value={value}
+            placeholder={placeholder}
             onChange={(event) => setter(event.target.value)}
         />
     );
