@@ -40,6 +40,7 @@ const Dashboard = () => {
 
     const location = useLocation();
     const [contacts, setContacts] = useState(location.state || bebop);
+    const [filteredContacts, setFilteredContacts] = useState([]);
 
     const navigate = useNavigate();
 
@@ -48,8 +49,11 @@ const Dashboard = () => {
     };
 
     const find = () => {
-        // TODO Add logic for searching contacts
-        console.log(contacts);
+        const results = contacts.filter((contact) => {
+            return contact.name.toLowerCase().includes(searchContact);
+        });
+
+        setFilteredContacts(results);
     };
 
     const removeContact = (id) => {
@@ -85,21 +89,37 @@ const Dashboard = () => {
                     </Link>
                 </div>
                 <div className="rightPanel">
-                    {contacts.map((contact) => (
-                        <Card
-                            key={contact.id}
-                            id={contact.id}
-                            name={contact.name}
-                            phoneNumber={contact.phone}
-                            imgSrc={contact.imgSrc}
-                            yeet={removeContact}
-                            edit={() =>
-                                navigate(`/edit/${contact.id}`, {
-                                    state: contacts,
-                                })
-                            }
-                        />
-                    ))}
+                    {filteredContacts.length > 0
+                        ? filteredContacts.map((contact) => (
+                              <Card
+                                  key={contact.id}
+                                  id={contact.id}
+                                  name={contact.name}
+                                  phoneNumber={contact.phone}
+                                  imgSrc={contact.imgSrc}
+                                  yeet={removeContact}
+                                  edit={() =>
+                                      navigate(`/edit/${contact.id}`, {
+                                          state: contacts,
+                                      })
+                                  }
+                              />
+                          ))
+                        : contacts.map((contact) => (
+                              <Card
+                                  key={contact.id}
+                                  id={contact.id}
+                                  name={contact.name}
+                                  phoneNumber={contact.phone}
+                                  imgSrc={contact.imgSrc}
+                                  yeet={removeContact}
+                                  edit={() =>
+                                      navigate(`/edit/${contact.id}`, {
+                                          state: contacts,
+                                      })
+                                  }
+                              />
+                          ))}
                 </div>
                 <Link to="/">Back to login </Link>
             </div>
