@@ -3,12 +3,43 @@ import { Link, useLocation } from 'react-router-dom';
 import Input from './Input';
 import Card from './Card';
 import { v4 as uuidv4 } from 'uuid';
+import spike from './assets/spike.jpg';
+import jet from './assets/jet.jpg';
+import faye from './assets/faye.jpg';
+import ed from './assets/edward.jpg';
+
+const bebop = [
+    {
+        name: 'Spike Spiegel',
+        phone: '123123123',
+        id: uuidv4(),
+        imgSrc: spike,
+    },
+    {
+        name: 'Jet Black',
+        phone: '123123123',
+        id: uuidv4(),
+        imgSrc: jet,
+    },
+    {
+        name: 'Faye Valentine',
+        phone: '123123123',
+        id: uuidv4(),
+        imgSrc: faye,
+    },
+    {
+        name: 'Edward',
+        phone: '123123123',
+        id: uuidv4(),
+        imgSrc: ed,
+    },
+];
 
 const Dashboard = () => {
     const [searchContact, setSearchContact] = useState('');
 
     const location = useLocation();
-    const contacts = location.state || [];
+    const contacts = location.state || bebop;
 
     const buttonStyle = {
         width: 'fit-content',
@@ -51,6 +82,7 @@ const Dashboard = () => {
                             key={contact.id}
                             name={contact.name}
                             phoneNumber={contact.phone}
+                            imgSrc={contact.imgSrc}
                         />
                     ))}
                 </div>

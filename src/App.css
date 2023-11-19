@@ -151,6 +151,7 @@ body {
 }
 
 .cardName {
+    font-size: 32px;
     grid-area: name;
     width: fit-content;
     height: fit-content;

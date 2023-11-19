@@ -1,7 +1,9 @@
-const Card = ({ name, phoneNumber, id }) => {
+import defaultLogo from './assets/default.jpg';
+
+const Card = ({ name, phoneNumber, id, imgSrc = defaultLogo }) => {
     return (
         <div key={id} className="card">
-            <img className="cardImage" />
+            <img className="cardImage" src={imgSrc} />
 
             <div className="cardData">
                 <h2 className="cardName">{name}</h2>
