@@ -12,18 +12,20 @@ const Edit = () => {
     const location = useLocation();
     const contacts = location.state || [];
 
-    console.log(contacts);
+    const contact = contacts.find((c) => c.id === id || '');
 
     const handleSave = () => {
-        navigate('/dashboard');
+        contact.name = name;
+        contact.phone = phone;
+        navigate('/dashboard', { state: contacts });
     };
     return (
         <>
             <div className="editPage">
                 <h1>Edit contact</h1>
                 <img
-                    src={contactLogo}
-                    className="contactLogo"
+                    src={contact.imgSrc}
+                    className="defaultLogo"
                     alt="a placeholder silouhette of a man"
                 />
 

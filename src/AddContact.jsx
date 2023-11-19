@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Input from './Input';
 import { useLocation, useNavigate } from 'react-router-dom';
 import contactLogo from './assets/contact.jpg';
+import defaultLogo from './assets/default.jpg';
 
 const AddContact = () => {
     const [name, setName] = useState('');
@@ -19,6 +20,7 @@ const AddContact = () => {
             name: name,
             phone: phone,
             id: uuidv4(),
+            imgSrc: defaultLogo,
         };
         const updatedContacts = [...contacts, contact];
 
