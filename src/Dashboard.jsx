@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Input from './Input';
 import Card from './Card';
@@ -7,6 +7,7 @@ import spike from './assets/spike.jpg';
 import jet from './assets/jet.jpg';
 import faye from './assets/faye.jpg';
 import ed from './assets/edward.jpg';
+import axios from 'axios';
 
 const bebop = [
     {
@@ -47,6 +48,21 @@ const Dashboard = () => {
     const buttonStyle = {
         width: 'fit-content',
     };
+
+    // BACKEND EXPERIMENT
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await axios.get('http://localhost:5000/info');
+                setSearchContact(response.data['sember']);
+                console.log('oiiii fetch some data');
+            } catch (error) {
+                console.error('error while fetching data: ', error);
+            }
+        }
+
+        fetchData();
+    }, []);
 
     const find = () => {
         const results = contacts.filter((contact) => {
