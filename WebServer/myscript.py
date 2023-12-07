@@ -1,7 +1,8 @@
 # import oracledb
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+
 import cx_Oracle
 from sqlalchemy import Identity
 
@@ -14,8 +15,8 @@ oracle_connection_string = (
 app = Flask(__name__)
 CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = oracle_connection_string.format(
-    username="username",
-    password="pass",
+    username="test_user3",
+    password="password1",
     hostname="localhost",
     port="1521",
     service_name="XEPDB1",
@@ -37,24 +38,36 @@ class Contact(db.Model):
     phone_number = db.Column(db.String(255))
 
 
+default_images = [
+    "../src/assets/spike.jpg",
+    "../src/assets/jet.jpg",
+    "../src/assets/faye.jpg",
+    "../src/assets/edward.jpg",
+]
+
 with app.app_context():
     # i guess this creates the table above
-    # db.create_all()
+    db.create_all()
 
     # let's add the bebop crew
-    # spike = Contact(name="Spike Spiegel", phone_number="123123123")
+    # spike = Contact(
+    #     name="Spike Spiegel", phone_number="123123123"
+    # )
     # jet = Contact(name="Jet Black", phone_number="123123123")
-    # faye = Contact(name="Faye Valentine", phone_number="123123123")
+    # faye = Contact(
+    #     name="Faye Valentine", phone_number="123123123"
+    # )
     # ed = Contact(name="Ed", phone_number="123123123")
     #
     # db.session.add_all([spike, jet, faye, ed])
     # db.session.commit()
-    #
-    # fetch all rows to check if they are added or not
-    bebop_crew = Contact.query.all()
 
-    for b in bebop_crew:
-        print(f"ID: {b.id}, name: {b.name}, phone: {b.phone_number}")
+    # fetch all rows to check if they are added or not
+
+    # bebop_crew = Contact.query.all()
+    #
+    # for b in bebop_crew:
+    #     print(f"ID: {b.id}, name: {b.name}, phone: {b.phone_number}")
 
 
 # Vanilla DB connnection. It's a miracle it works
@@ -72,6 +85,30 @@ def index():
 def test():
     result = {"sember": "rember"}
     return jsonify(result)
+
+
+@app.route("/bebop")
+def get_bebop():
+    bebop_crew = Contact.query.all()
+
+    result = [{"name": b.name, "phone": b.phone_number} for b in bebop_crew]
+
+    for b in bebop_crew:
+        print(f"name: {b.name}")
+
+    return jsonify(result)
+
+
+@app.route("/bebop", methods=["POST"])
+def add_bebop_member():
+    data = request.get_json()
+
+    new_member = Contact(
+        name=data["name"],
+        phone_number=data["phone"],
+    )
+    db.session.add(new_member)
+    db.session.commit()
 
 
 # cursor = connection.cursor()

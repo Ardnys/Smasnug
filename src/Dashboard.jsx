@@ -6,35 +6,23 @@ import { v4 as uuidv4 } from 'uuid';
 import spike from './assets/spike.jpg';
 import jet from './assets/jet.jpg';
 import faye from './assets/faye.jpg';
-import ed from './assets/edward.jpg';
+import edward from './assets/edward.jpg';
 import axios from 'axios';
 
-const bebop = [
-    {
-        name: 'Spike Spiegel',
-        phone: '123123123',
-        id: uuidv4(),
-        imgSrc: spike,
-    },
-    {
-        name: 'Jet Black',
-        phone: '123123123',
-        id: uuidv4(),
-        imgSrc: jet,
-    },
-    {
-        name: 'Faye Valentine',
-        phone: '123123123',
-        id: uuidv4(),
-        imgSrc: faye,
-    },
-    {
-        name: 'Edward',
-        phone: '123123123',
-        id: uuidv4(),
-        imgSrc: ed,
-    },
-];
+const images = [spike, jet, faye, edward];
+let bebop = [];
+try {
+    const response = await fetch('http://localhost:5000/bebop');
+    bebop = await response.json();
+
+    for (let i = 0; i < bebop.length; i++) {
+        const c = bebop[i];
+        c['id'] = uuidv4();
+        c['imgSrc'] = images[i];
+    }
+} catch (error) {
+    console.error('ERROR: Could not fetch default bebop crew: ', error);
+}
 
 const Dashboard = () => {
     const [searchContact, setSearchContact] = useState('');
@@ -50,19 +38,27 @@ const Dashboard = () => {
     };
 
     // BACKEND EXPERIMENT
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await axios.get('http://localhost:5000/info');
-                setSearchContact(response.data['sember']);
-                console.log('oiiii fetch some data');
-            } catch (error) {
-                console.error('error while fetching data: ', error);
-            }
-        }
-
-        fetchData();
-    }, []);
+    //
+    // useEffect(() => {
+    //     async function fetchData() {
+    //         try {
+    //             const response = await fetch('http://localhost:5000/bebop');
+    //             const bebop_crew = await response.json();
+    //
+    //             for (let i = 0; i < bebop_crew.length; i++) {
+    //                 const c = bebop_crew[i];
+    //                 c['id'] = uuidv4();
+    //                 c['imgSrc'] = images[i];
+    //             }
+    //
+    //             // setContacts(bebop_crew);
+    //         } catch (error) {
+    //             console.error('error while fetching data: ', error);
+    //         }
+    //     }
+    //
+    //     fetchData();
+    // }, []);
 
     const find = () => {
         const results = contacts.filter((contact) => {

@@ -13,6 +13,19 @@ const AddContact = () => {
     const contacts = location.state || [];
 
     let navigate = useNavigate();
+    async function postData(contact) {
+        try {
+            const response = await fetch('http://localhost:5000/bebop', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(contact),
+            });
+        } catch (error) {
+            console.error('ERROR: could not post item to database: ', error);
+        }
+    }
 
     const add = () => {
         // TODO: maybe check that name and phone is valid
@@ -22,6 +35,8 @@ const AddContact = () => {
             id: uuidv4(),
             imgSrc: defaultLogo,
         };
+        postData(contact);
+        // TODO: i guess post the new contact here?
         const updatedContacts = [...contacts, contact];
 
         let path = '/dashboard';
