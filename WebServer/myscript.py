@@ -2,9 +2,11 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import declarative_base
+
+from sqlalchemy import Column, Integer, String
 
 import cx_Oracle
-from sqlalchemy import Identity
 
 # flask app
 oracle_connection_string = (
@@ -24,19 +26,44 @@ app.config["SQLALCHEMY_DATABASE_URI"] = oracle_connection_string.format(
 
 db = SQLAlchemy(app)
 
+#
+# Base = declarative_base()
+# Base.query = db.session.query_property()
 
-class Contact(db.Model):
-    __tablename__ = "Contact"
 
-    id = db.Column(
+class Person(db.Model):
+    __tablename__ = "Person"
+
+    id = Column(
         db.Integer,
-        Identity(start=1000000000, cycle=True),
         primary_key=True,
         autoincrement=True,
     )
     name = db.Column(db.String(255))
     phone_number = db.Column(db.String(255))
+    img_src = db.Column(db.String(255))
 
+    def __repr__(self):
+        return f"name: {self.name}, number: {self.phone_number}"
+
+
+#
+# class Contact(db.Model):
+#     __tablename__ = "Contact"
+#
+#     id = db.Column(
+#         db.Integer,
+#         primary_key=True,
+#     )
+#     name = db.Column(db.String(255))
+#     phone_number = db.Column(db.String(255))
+#     img_src = db.Column(db.String(255))
+#
+#     def __init__(self, name=None, phone_number=None, img_src=None):
+#         self.name = name
+#         self.phone_number = phone_number
+#         self.img_src = img_src
+#
 
 default_images = [
     "../src/assets/spike.jpg",
@@ -46,28 +73,32 @@ default_images = [
 ]
 
 with app.app_context():
-    # i guess this creates the table above
+    db.drop_all()
     db.create_all()
-
     # let's add the bebop crew
-    # spike = Contact(
-    #     name="Spike Spiegel", phone_number="123123123"
-    # )
-    # jet = Contact(name="Jet Black", phone_number="123123123")
-    # faye = Contact(
-    #     name="Faye Valentine", phone_number="123123123"
-    # )
-    # ed = Contact(name="Ed", phone_number="123123123")
-    #
-    # db.session.add_all([spike, jet, faye, ed])
-    # db.session.commit()
+    spike = Person(
+        id=1, name="Spike Spiegel", phone_number="123123123", img_src=default_images[0]
+    )
+    jet = Person(
+        id=2, name="Jet Black", phone_number="456456456", img_src=default_images[1]
+    )
+    faye = Person(
+        id=3, name="Faye Valentine", phone_number="789789789", img_src=default_images[2]
+    )
+    ed = Person(id=4, name="Ed", phone_number="4737872895", img_src=default_images[3])
 
-    # fetch all rows to check if they are added or not
+    db.session.add_all([spike, jet, faye, ed])
+    db.session.commit()
 
-    # bebop_crew = Contact.query.all()
-    #
-    # for b in bebop_crew:
-    #     print(f"ID: {b.id}, name: {b.name}, phone: {b.phone_number}")
+
+# init_db()
+
+# fetch all rows to check if they are added or not
+
+# bebop_crew = Contact.query.all()
+#
+# for b in bebop_crew:
+#     print(f"ID: {b.id}, name: {b.name}, phone: {b.phone_number}")
 
 
 # Vanilla DB connnection. It's a miracle it works
@@ -89,9 +120,12 @@ def test():
 
 @app.route("/bebop")
 def get_bebop():
-    bebop_crew = Contact.query.all()
+    bebop_crew = Person.query.all()
 
-    result = [{"name": b.name, "phone": b.phone_number} for b in bebop_crew]
+    result = [
+        {"id": b.id, "name": b.name, "phone": b.phone_number, "img_src": b.img_src}
+        for b in bebop_crew
+    ]
 
     for b in bebop_crew:
         print(f"name: {b.name}")
