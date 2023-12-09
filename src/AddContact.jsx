@@ -32,11 +32,13 @@ const AddContact = () => {
         const contact = {
             name: name,
             phone: phone,
-            id: uuidv4(),
+            id: 0, // not needed
             imgSrc: defaultLogo,
         };
         postData(contact);
-        // TODO: i guess post the new contact here?
+        // if i add the new contact to database,
+        // i don't have to pass the new contacts like that
+
         const updatedContacts = [...contacts, contact];
 
         let path = '/dashboard';

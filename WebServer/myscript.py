@@ -1,10 +1,8 @@
 # import oracledb
 from flask import Flask, jsonify, request
-from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import declarative_base
+from sqlalchemy import Sequence
 
-from sqlalchemy import Column, Integer, String
 
 import cx_Oracle
 
@@ -15,7 +13,6 @@ oracle_connection_string = (
 )
 
 app = Flask(__name__)
-CORS(app)
 app.config["SQLALCHEMY_DATABASE_URI"] = oracle_connection_string.format(
     username="test_user3",
     password="password1",
@@ -26,22 +23,22 @@ app.config["SQLALCHEMY_DATABASE_URI"] = oracle_connection_string.format(
 
 db = SQLAlchemy(app)
 
-#
-# Base = declarative_base()
-# Base.query = db.session.query_property()
+id_seq = db.Sequence("PERSON_ID_SEQ")
 
 
 class Person(db.Model):
-    __tablename__ = "Person"
+    __tablename__ = "PERSON"
 
-    id = Column(
+    ID = db.Column(
         db.Integer,
+        id_seq,
+        server_default=id_seq.next_value(),
         primary_key=True,
         autoincrement=True,
     )
     name = db.Column(db.String(255))
     phone_number = db.Column(db.String(255))
-    img_src = db.Column(db.String(255))
+    imgSrc = db.Column(db.String(255))
 
     def __repr__(self):
         return f"name: {self.name}, number: {self.phone_number}"
@@ -65,11 +62,12 @@ class Person(db.Model):
 #         self.img_src = img_src
 #
 
+
 default_images = [
-    "../src/assets/spike.jpg",
-    "../src/assets/jet.jpg",
-    "../src/assets/faye.jpg",
-    "../src/assets/edward.jpg",
+    ".assets/spike.jpg",
+    ".assets/jet.jpg",
+    ".assets/faye.jpg",
+    ".assets/edward.jpg",
 ]
 
 with app.app_context():
@@ -77,15 +75,22 @@ with app.app_context():
     db.create_all()
     # let's add the bebop crew
     spike = Person(
-        id=1, name="Spike Spiegel", phone_number="123123123", img_src=default_images[0]
+        name="Spike Spiegel",
+        phone_number="123123123",
     )
+
     jet = Person(
-        id=2, name="Jet Black", phone_number="456456456", img_src=default_images[1]
+        name="Jet Black",
+        phone_number="456456456",
     )
     faye = Person(
-        id=3, name="Faye Valentine", phone_number="789789789", img_src=default_images[2]
+        name="Faye Valentine",
+        phone_number="789789789",
     )
-    ed = Person(id=4, name="Ed", phone_number="4737872895", img_src=default_images[3])
+    ed = Person(
+        name="Ed",
+        phone_number="4737872895",
+    )
 
     db.session.add_all([spike, jet, faye, ed])
     db.session.commit()
@@ -122,10 +127,7 @@ def test():
 def get_bebop():
     bebop_crew = Person.query.all()
 
-    result = [
-        {"id": b.id, "name": b.name, "phone": b.phone_number, "img_src": b.img_src}
-        for b in bebop_crew
-    ]
+    result = [{"id": b.ID, "name": b.name, "phone": b.phone_number} for b in bebop_crew]
 
     for b in bebop_crew:
         print(f"name: {b.name}")
@@ -137,7 +139,7 @@ def get_bebop():
 def add_bebop_member():
     data = request.get_json()
 
-    new_member = Contact(
+    new_member = Person(
         name=data["name"],
         phone_number=data["phone"],
     )
