@@ -5,26 +5,26 @@ import AddContact from './AddContact.jsx';
 import Edit from './Edit.jsx';
 
 const MyRouter = () => {
-    const router = createBrowserRouter([
-        {
-            path: '/',
-            element: <Login />,
-        },
-        {
-            path: 'dashboard',
-            element: <Dashboard />,
-        },
-        {
-            path: 'add',
-            element: <AddContact />,
-        },
-        {
-            path: 'edit/:id',
-            element: <Edit />,
-        },
-    ]);
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Login />
+    },
+    {
+      path: 'dashboard',
+      element: <Dashboard />
+    },
+    {
+      path: 'add',
+      element: <AddContact />
+    },
+    {
+      path: 'edit/:id',
+      element: <Edit />
+    }
+  ]);
 
-    return <RouterProvider router={router} />;
+  return <RouterProvider router={router} />;
 };
 
 export default MyRouter;

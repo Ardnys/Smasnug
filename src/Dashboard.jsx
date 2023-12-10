@@ -15,8 +15,9 @@ const Dashboard = () => {
   const [searchContact, setSearchContact] = useState('');
 
   const location = useLocation();
-  const [contacts, setContacts] = useState(location.state || bebop);
+  const [contacts, setContacts] = useState(bebop);
   const [filteredContacts, setFilteredContacts] = useState([]);
+  const [userId, setUserId] = useState(location.state || 0);
 
   const navigate = useNavigate();
 
@@ -27,7 +28,7 @@ const Dashboard = () => {
   // BACKEND EXPERIMENT
   async function fetchData() {
     try {
-      const response = await fetch('/api/bebop');
+      const response = await fetch(`/api/user/${userId}/bebop`);
       const bebop_crew = await response.json();
 
       setContacts(bebop_crew);
@@ -50,7 +51,7 @@ const Dashboard = () => {
 
   async function removeContact(id) {
     try {
-      const response = await fetch('/api/bebop', {
+      const response = await fetch(`/api/user/${userId}/bebop`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
@@ -82,9 +83,7 @@ const Dashboard = () => {
           >
             Search
           </button>
-          <Link to="/add">
-            {' '}
-            {/* Use Link for navigation */}
+          <Link to={'/add'} state={{ state: userId }}>
             <button type="button" className="loginButton" style={buttonStyle}>
               Add New Contact
             </button>
@@ -101,9 +100,7 @@ const Dashboard = () => {
                   imgSrc={contact.imgSrc}
                   yeet={removeContact}
                   edit={() =>
-                    navigate(`/edit/${contact.id}`, {
-                      state: contacts
-                    })
+                    navigate(`/edit/${contact.id}`, { state: userId })
                   }
                 />
               ))
@@ -116,9 +113,7 @@ const Dashboard = () => {
                   imgSrc={contact.imgSrc}
                   yeet={removeContact}
                   edit={() =>
-                    navigate(`/edit/${contact.id}`, {
-                      state: contacts
-                    })
+                    navigate(`/edit/${contact.id}`, { state: userId })
                   }
                 />
               ))}
