@@ -9,7 +9,6 @@ import faye from './assets/faye.jpg';
 import edward from './assets/edward.jpg';
 import axios from 'axios';
 
-const images = [spike, jet, faye, edward];
 let bebop = [];
 
 const Dashboard = () => {
@@ -26,25 +25,18 @@ const Dashboard = () => {
   };
 
   // BACKEND EXPERIMENT
+  async function fetchData() {
+    try {
+      const response = await fetch('/api/bebop');
+      const bebop_crew = await response.json();
+
+      setContacts(bebop_crew);
+    } catch (error) {
+      console.error('error while fetching data: ', error);
+    }
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await fetch('/api/bebop');
-        const bebop_crew = await response.json();
-
-        // for (let i = 0; i < bebop_crew.length; i++) {
-        //     const c = bebop_crew[i];
-        //     c['id'] = uuidv4();
-        //     c['imgSrc'] = images[i];
-        // }
-
-        setContacts(bebop_crew);
-      } catch (error) {
-        console.error('error while fetching data: ', error);
-      }
-    }
-
     fetchData();
   }, []);
 
@@ -56,11 +48,24 @@ const Dashboard = () => {
     setFilteredContacts(results);
   };
 
-  const removeContact = (id) => {
-    setContacts((prevContacts) =>
-      prevContacts.filter((contact) => contact.id !== id)
-    );
-  };
+  async function removeContact(id) {
+    try {
+      const response = await fetch('/api/bebop', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(id)
+      });
+    } catch (error) {
+      console.error('ERROR: could not delete contact from database ', error);
+    }
+    fetchData();
+
+    // setContacts((prevContacts) =>
+    //   prevContacts.filter((contact) => contact.id !== id)
+    // );
+  }
 
   return (
     <>
@@ -77,7 +82,7 @@ const Dashboard = () => {
           >
             Search
           </button>
-          <Link to="/add" state={contacts}>
+          <Link to="/add">
             {' '}
             {/* Use Link for navigation */}
             <button type="button" className="loginButton" style={buttonStyle}>

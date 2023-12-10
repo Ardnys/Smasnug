@@ -145,6 +145,18 @@ def add_bebop_member():
     )
     db.session.add(new_member)
     db.session.commit()
+    return "added new member"
+
+
+@app.route("/bebop", methods=["DELETE"])
+def delete_bebop_member():
+    id_to_delete = request.get_json()
+
+    # print(f"request json: {id_to_delete}")
+    Person.query.filter_by(ID=id_to_delete).delete()
+    db.session.commit()
+
+    return "Deleted " + str(id_to_delete)
 
 
 # cursor = connection.cursor()
