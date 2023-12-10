@@ -34,3 +34,20 @@ Very sophisticated searching algorithm in action. Also newly added contacts have
 As if all this isn't enough, this thing is getting A SERVER and A DATABASE! Phew we are living on the edge. \
 After a lot of agonizing hours in front of the keeb and discussions with knowledgeable people and googling and prompting mildly helpful AI assistant, I am calling it done. I can't show you a working example unless you follow my professional deployment guide, so please take my word for it. \
 I quit, 10/12/2023 23:11 PM.
+
+# Short poem that summarizes my journey
+such a pain that oracle database,
+back them up just in case.
+o' lord, is python easy,
+but them docs, so cheesy.
+
+running on different ports, i wonder why,
+of course proxy config, it's such a lie.
+passing the state in react is such a pain,
+googling, prompting, it's all in vain.
+
+i ponder, "i am confused, i can't find a way",
+but then my senses come back, "tisn't me, nay".
+fast forward an eternity, i am still where i am
+peanut butter and jam.
+
